@@ -1,20 +1,32 @@
 const Router = require('koa-router')
 const router = new Router()
 
+const todoItems = {}
+
 router.get('/api/todo/', ctx => {
-  ctx.body = [{
-    id: 123456,
-    name: "Do thing",
-    isComplete: false
-  }]
+  ctx.body = Object.values(todoItems)
 })
 
 router.get('/api/todo/:id', ctx => {
-  ctx.body = {
-    id: ctx.params.id,
-    name: "Do thing",
-    isComplete: false
-  }
+  ctx.body = todoItems[ctx.params.id]
 })
+
+router.post('/api/todo', ctx => {
+  const id = ctx.request.body.id
+  todoItems[id] = ctx.request.body
+  ctx.body = ctx.request.body
+})
+
+router.put('/api/todo/:id', ctx => {
+  todoItems[ctx.params.id] = ctx.request.body
+  ctx.body = ctx.request.body
+})
+
+router.delete('/api/todo/:id', ctx => {
+  todoItems[ctx.params.id] = undefined
+  ctx.body = ctx.request.body
+})
+
+
 
 module.exports = router
