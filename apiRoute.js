@@ -12,8 +12,11 @@ router.get('/api/todo/:id', ctx => {
 })
 
 router.post('/api/todo', ctx => {
-  const id = ctx.request.body.id
-  todoItems[id] = ctx.request.body
+  const id = todoItems.length + 1
+  todoItems.push({
+    ...ctx.request.body,
+    id
+  })
   ctx.body = ctx.request.body
 })
 
