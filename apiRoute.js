@@ -1,36 +1,25 @@
 const Router = require('koa-router')
 const router = new Router()
+const databaseService = require('./databaseService')
 
-const todoItems = {}
-
-router.get('/api/todo/', ctx => {
-  ctx.body = Object.values(todoItems)
+router.get('/api/todo/', async ctx => {
+  ctx.body = await databaseService.getAllTodos()
 })
 
-router.get('/api/todo/:id', ctx => {
-  ctx.body = todoItems[ctx.params.id]
+router.get('/api/todo/:id', async ctx => {
+  ctx.body = await databaseService.getTodo(ctx.params.id)
 })
 
-router.post('/api/todo', ctx => {
-  const id = todoItems.length + 1
-  const body = {
-    ...ctx.request.body,
-    id
-  }
-  todoItems.push(body)
-  ctx.body = body
+router.post('/api/todo', async ctx => {
+  ctx.body = await databaseService.insertTodo(ctx.request.body)
 })
 
-router.put('/api/todo/:id', ctx => {
-  todoItems[ctx.params.id] = ctx.request.body
-  ctx.body = ctx.request.body
+router.put('/api/todo/:id', async ctx => {
+  ctx.body = await databaseService.updateTodo(ctx.params.id, ctx.request.body)
 })
 
-router.delete('/api/todo/:id', ctx => {
-  todoItems[ctx.params.id] = undefined
-  ctx.body = ctx.request.body
+router.delete('/api/todo/:id', async ctx => {
+  ctx.body = await databaseService.deleteTodo(ctx.params.id)
 })
-
-
 
 module.exports = router
