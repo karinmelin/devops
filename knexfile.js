@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      user: 'robin.karin.melin',
+      user: 'karin.melin',
       database: 'todo-api'
     }
   },
