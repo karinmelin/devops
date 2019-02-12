@@ -1,5 +1,5 @@
 const knex = require('knex')({
-  client: 'pg',
+  client: 'postgresql',
   connection: `${process.env.DATABASE_URL}${process.env.NODE_ENV === 'production' ? '?ssl=require' : ''}`,
   searchPath: ['knex', 'public'],
 });
